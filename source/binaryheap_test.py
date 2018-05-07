@@ -9,6 +9,7 @@ class TestBinaryMinHeap(unittest.TestCase):
     def test_size_of_empty_heap(self):
         heap = BinaryMinHeap()
         assert heap.size() == 0
+        assert heap.is_empty() is True
 
     def test_get_min_on_empty_heap(self):
         heap = BinaryMinHeap()
@@ -22,7 +23,9 @@ class TestBinaryMinHeap(unittest.TestCase):
 
     def test_insert_and_get_one_item(self):
         heap = BinaryMinHeap()
+        assert heap.is_empty() is True
         heap.insert(5)
+        assert heap.is_empty() is False
         assert heap.size() == 1
         assert heap.get_min() == 5
         assert heap.items == [5]
@@ -37,6 +40,7 @@ class TestBinaryMinHeap(unittest.TestCase):
             assert heap.get_min() == min_item
         assert heap.size() == len(items)
         assert heap.items == [3, 9, 5, 25, 29, 86, 55]
+        assert heap.is_empty() is False
 
     def test_insert_and_get_many_random_items(self):
         heap = BinaryMinHeap()
