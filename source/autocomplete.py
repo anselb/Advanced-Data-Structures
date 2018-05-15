@@ -12,7 +12,15 @@ def get_words(filename):
 
 def autocomplete(words, prefix):
     # Return list: all words given a prefix
+    # Find an index of a word close to prefix with binary search and check if
+    # the word starts with the prefix
+    found_words = []
     index = binary_search_recursive(array=words, item=prefix)
+    if words[index].startswith(prefix):
+        found_words.append(words[index])
+
+    # Get the indexes to the left and right of index if they are within the
+    # word list bounds
     left = index
     right = index
     if left > 0:
@@ -20,9 +28,8 @@ def autocomplete(words, prefix):
     if right < len(words) - 1:
         right += 1
 
-    found_words = []
-    found_words.append(words[index])
-
+    # Add words to the left and right of the found index until the words don't
+    # match the prefix anymore
     while ((words[left].startswith(prefix) and words[left] not in found_words) or
             (words[right].startswith(prefix) and words[right] not in found_words)):
         if words[left].startswith(prefix):
@@ -74,10 +81,20 @@ def binary_search_recursive(array, item, left=None, right=None):
 
 
 all_words = get_words('/usr/share/dict/words')
-print(all_words[232769])
-# yab - ['yaba', 'yabber', 'yabbi', 'yabble', 'yabby', 'yabu']
-print(autocomplete(all_words, 'yab'))
 
+# Test with prefix 'yab'
+print(all_words[232769])
+print(autocomplete(all_words, 'yab'))
+# yab - ['yaba', 'yabber', 'yabbi', 'yabble', 'yabby', 'yabu']
+
+# Test with an edge case
+words = ['a', 'z']
+print(autocomplete(words, 'ab'))
+# Orignally printed 'z' because binary search returned the right index of 1 and
+# the autocomplete function would blindly put that index in the list of matched
+# words without checking to make sure it matches the prefix
+
+# Test with a lot of prefixes
 all_prefixes = set([word[:len(word)//2] for word in all_words])
 all_prefixes.remove('')
 time = benchmark(all_words, all_prefixes)
