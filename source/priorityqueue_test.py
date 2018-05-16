@@ -13,21 +13,21 @@ class PriorityQueueTest(unittest.TestCase):
         assert pq.is_empty() is True
 
     def test_init_with_list(self):
-        pq = PriorityQueue(['A', 'B', 'C'])
-        assert pq.front() == 'A'
+        pq = PriorityQueue([(3, 'A'), (2, 'B'), (1, 'C')])
+        assert pq.front() == (1, 'C')
         assert pq.length() == 3
         assert pq.is_empty() is False
 
     def test_length(self):
         pq = PriorityQueue()
         assert pq.length() == 0
-        pq.enqueue('A')
+        pq.enqueue('A', 1)
         assert pq.length() == 1
-        pq.enqueue('B')
+        pq.enqueue('B', 2)
         assert pq.length() == 2
-        pq.dequeue()
+        assert pq.dequeue() == ((1, 'A'))
         assert pq.length() == 1
-        pq.dequeue()
+        assert pq.dequeue() == ((2, 'B'))
         assert pq.length() == 0
 
     def test_enqueue(self):
