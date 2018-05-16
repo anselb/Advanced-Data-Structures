@@ -28,7 +28,7 @@ class PriorityQueue(object):
         """Return the number of items in this priority queue."""
         return self.heap.size()
 
-    def enqueue(self, item, priority):
+    def enqueue(self, priority, item):
         """Insert the given item into this priority queue in order according to
         the given priority."""
         # Insert given item into heap in order according to given priority
@@ -51,7 +51,7 @@ class PriorityQueue(object):
         min_item = self.heap.delete_min()
         return min_item
 
-    def push_pop(self, item, priority):
+    def push_pop(self, priority, item):
         """Remove and return the item at the front of this priority queue,
         and insert the given item in order according to the given priority.
         This method is more efficient than calling dequeue and then enqueue."""
