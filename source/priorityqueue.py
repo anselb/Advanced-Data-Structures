@@ -8,10 +8,13 @@ class PriorityQueue(object):
     in priority order and to access and dequeue its highest priority item.
     Item pairs are stored in a binary min heap for its efficient operations."""
 
-    def __init__(self):
-        """Initialize this priority queue."""
+    def __init__(self, items=None):
+        """Initialize a priority queue and insert the given items, if any."""
         # Initialize new binary min heap to store items in this priority queue
         self.heap = BinaryMinHeap()
+        if items:
+            for item in items:
+                self.heap.insert(item)
 
     def __repr__(self):
         """Return a string representation of this priority queue."""
