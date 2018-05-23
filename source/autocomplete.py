@@ -80,22 +80,23 @@ def binary_search_recursive(array, item, left=None, right=None):
         return binary_search_recursive(array, item, index, right)
 
 
-all_words = get_words('/usr/share/dict/words')
+if __name__ == "__main__":
+    all_words = get_words('/usr/share/dict/words')
 
-# Test with prefix 'yab'
-print(all_words[232769])
-print(autocomplete(all_words, 'yab'))
-# yab - ['yaba', 'yabber', 'yabbi', 'yabble', 'yabby', 'yabu']
+    # Test with prefix 'yab'
+    print(all_words[232769])
+    print(autocomplete(all_words, 'yab'))
+    # yab - ['yaba', 'yabber', 'yabbi', 'yabble', 'yabby', 'yabu']
 
-# Test with an edge case
-words = ['a', 'z']
-print(autocomplete(words, 'ab'))
-# Orignally printed 'z' because binary search returned the right index of 1 and
-# the autocomplete function would blindly put that index in the list of matched
-# words without checking to make sure it matches the prefix
+    # Test with an edge case
+    words = ['a', 'z']
+    print(autocomplete(words, 'ab'))
+    # Orignally printed 'z' because binary search returned the right index of 1
+    # and the autocomplete function would blindly put that index in the list of
+    # matched words without checking to make sure it matches the prefix
 
-# Test with a lot of prefixes
-all_prefixes = set([word[:len(word)//2] for word in all_words])
-all_prefixes.remove('')
-time = benchmark(all_words, all_prefixes)
-print('Took {} seconds to benchmark {} prefixes on {} words'.format(time, len(all_prefixes), len(all_words)))
+    # Test with a lot of prefixes
+    all_prefixes = set([word[:len(word)//2] for word in all_words])
+    all_prefixes.remove('')
+    time = benchmark(all_words, all_prefixes)
+    print('Took {} seconds to benchmark {} prefixes on {} words'.format(time, len(all_prefixes), len(all_words)))
