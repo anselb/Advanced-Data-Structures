@@ -11,8 +11,8 @@ def fibonacci(n):
         raise ValueError('fibonacci is undefined for n = {!r}'.format(n))
     # Implement fibonacci_recursive, _memoized, and _dynamic below, then
     # change this to call your implementation to verify it passes all tests
-    return fibonacci_recursive(n)
-    # return fibonacci_memoized(n)
+    # return fibonacci_recursive(n)
+    return fibonacci_memoized(n)
     # return fibonacci_dynamic(n)
 
 
@@ -26,11 +26,23 @@ def fibonacci_recursive(n):
         return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
 
 
-def fibonacci_memoized(n):
-    # TODO: Memoize the fibonacci function's recursive implementation here
-    pass
+def fibonacci_memoized(n, results=None):
+    # Memoize the fibonacci function's recursive implementation here
     # Once implemented, change fibonacci (above) to call fibonacci_memoized
     # to verify that your memoized implementation passes all test cases
+    if not results:
+        results = {}
+
+    if n == 0 or n == 1:
+        return n
+    # If fibonacci(n) is saved, return it
+    elif n in results:
+        return results[n]
+    elif n > 1:
+        # Start a recursive chain to save necessary fibonacci numbers
+        results[n - 1] = fibonacci_memoized(n - 1, results)
+        # When the chain is finished, return fibonacci(n) using recursive calls
+        return fibonacci_memoized(n - 1, results) + fibonacci_memoized(n - 2, results)
 
 
 def fibonacci_dynamic(n):
