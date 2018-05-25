@@ -11,11 +11,32 @@ def fibonacci(n):
         raise ValueError('fibonacci is undefined for n = {!r}'.format(n))
     # Implement fibonacci_recursive, _memoized, and _dynamic below, then
     # change this to call your implementation to verify it passes all tests
-    # return fibonacci_recursive(n)
-    return fibonacci_memoized(n)
+    return fibonacci_recursive(n)
+    # return fibonacci_memoized(n)
     # return fibonacci_dynamic(n)
 
 
+def memoized(func):
+    # Create the cache
+    cache = {}
+    def memoization(*args, **kwargs):
+        """Create a new fuction to return
+        *args: tuple of arguments passed in
+        **kwargs: dictionary of keyword arguments"""
+        # Create a key based on the arguments and keyword arguments passed in
+        # Both need to be converted to strings in order to be a valid hash
+        key = str(*args) + str(**kwargs)
+        # If the key is not in the cache, add it to the cache
+        if key not in cache:
+            cache[key] = func(*args, **kwargs)
+        # Since the above statement captures keys not in the cache and adds
+        # them to the cache, the below statement should always work
+        return cache[key]
+    # Return the new function that is created
+    return memoization
+
+
+@memoized
 def fibonacci_recursive(n):
     # Check if n is one of the base cases
     if n == 0 or n == 1:
